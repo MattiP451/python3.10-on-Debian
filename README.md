@@ -23,3 +23,5 @@ Here comes the tricky part though, python3.10-venv depends on python3.10-distuti
 After this we can install python3.10-minimal and python3.10-venv and we're ready to go.
 
 >sudo apt install python3.10-minimal python3.10-venv
+
+To calm your paranoia, edit out the repositories from your sources list after you've installed python.
