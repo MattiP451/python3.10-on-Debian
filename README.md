@@ -33,7 +33,7 @@ Pin-Priority: 1 tells apt to only install the files from this repository when ex
 
 **Install python3.10-distutils**
 
-Here comes the tricky part though, python3.10-venv depends on python3.10-distutils, a package that only existed in the version back in Debian Buster and then it was called python3-distutils. python3-distuils provides python3.11-distutils and python3.12-distutils in Trixe, and there never was an actual python3.10-distutils back in buster. So instead we break the earlier rule of not downloading packages from the net and grab python3.10-distutils-bogus_1.0_all.deb that I've uploaded to this repository. This is a meta package that says "python3.10-distuilts is installed, these are not the droid you're looking for". Unzip the .deb file and look at what it contains, or even better make it yourself with [equivs](https://packages.debian.org/search?keywords=equivs). If you trust me (which again, you shouldn't) download the .deb file and install it with apt.
+Here comes the tricky part though, python3.10-venv depends on python3.10-distutils, a package that only existed in the version back in Debian Buster and then it was called python3-distutils. python3-distuils provides python3.11-distutils and python3.12-distutils in Trixe, and there never was an actual python3.10-distutils back in Buster. So instead we break the earlier rule of not downloading packages from the net and grab python3.10-distutils-bogus_1.0_all.deb that I've uploaded to this repository. This is a meta package that says "python3.10-distuilts is installed, these are not the droid you're looking for". Unzip the .deb file and look at what it contains, or even better make it yourself with [equivs](https://packages.debian.org/search?keywords=equivs). If you trust me (which again, you shouldn't) download the .deb file and install it with apt.
 
 ```
 sudo apt install ./python3.10-distutils-bogus_1.0_all.deb
@@ -49,7 +49,7 @@ sudo apt install python3.10-minimal python3.10-venv
 
 **Calm my paranoia**
 
-Remove or comment out the snapshot repository from your sources.list
+Remove or comment out the snapshot repository from your sources and preferences.
 
 **Remove the snapshot source and preference files**
 ```
