@@ -22,7 +22,7 @@ The files in the repository have a "best before date" and we'll need the [check-
 
 Then we'll add some preferences to prevent apt from installing any files from this snapshot that we haven't asked for. This is not an absolutely must, but I feel safer with it. You can remove it when you're finished. 
 
-**/etc/apt/preferences.d/snapshot**
+**/etc/apt/preferences.d/snapshot.pref**
 ```
 Package: *
 Pin: origin "snapshot.debian.org"
@@ -54,7 +54,7 @@ Remove or comment out the snapshot repository from your sources.list
 **Remove the snapshot source and preference files**
 ```
 sudo rm /etc/apt/sources.list.d/snapshot.list
-sudo rm /etc/apt/preferences.d/snapshot
+sudo rm /etc/apt/preferences.d/snapshot.pref
 ```
 
 And then run an apt update again.
