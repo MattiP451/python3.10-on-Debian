@@ -1,7 +1,7 @@
 # Install python3.10 on Debian
-How to install python 3.10 with venv on Debian
+How to install python 3.10 with venv on Debian.
 
-Python 3.10 isn't in Debian stable since Buster and neither is it in Sid since 2024. Instead of installing files from the internet that some guy uploaded we'll use a snapshot for Debian Sid here.
+Python 3.10 is still needed for some python software, mainly AI, but Python 3.10 isn't in Debian stable since Buster and neither is it in Sid since 2024. Instead of installing files from the internet that some guy uploaded we'll use a snapshot for Debian Sid here.
 
 **First update your computer**
 
@@ -12,7 +12,7 @@ sudo apt upgrade
 
 Then we'll add the snapshot to sources.list.
 
-**/etc/apt/sources.list**
+**/etc/apt/sources.list.d/snapshot.list**
 ```
 deb [check-valid-until=no] https://snapshot.debian.org/archive/debian/20240326T090155Z/ sid main
 deb-src [check-valid-until=no] https://snapshot.debian.org/archive/debian/20240326T090155Z/ sid main
@@ -22,10 +22,10 @@ The files in the repository have a "best before date" and we'll need the [check-
 
 Then we'll add some preferences to prevent apt from installing any files from this snapshot that we haven't asked for. This is not an absolutely must, but I feel safer with it. You can remove it when you're finished. 
 
-**/etc/apt/preferences**
+**/etc/apt/preferences.d/snapshot**
 ```
 Package: *
-Pin: release a=unstable
+Pin: origin "snapshot.debian.org"
 Pin-Priority: 1
 ```
 
@@ -33,7 +33,7 @@ Pin-Priority: 1 tells apt to only install the files from this repository when ex
 
 **Install python3.10-distutils**
 
-Here comes the tricky part though, python3.10-venv depends on python3.10-distutils, a package that only existed in the version back in Debian Buster and then it was called python3-venv. So instead we break the earlier rule of not downloading packages from the net and grab python3.10-distutils-bogus_1.0_all.deb that I've uploaded to this repository. This is a meta package that says "python3.10-distuilts is installed, these are not the droid you're looking for". Unzip the .deb file and look at what it contains, or even better make it yourself with [equivs](https://packages.debian.org/search?keywords=equivs). If you trust me (which you shouldn't) download the .deb file and install it with apt.
+Here comes the tricky part though, python3.10-venv depends on python3.10-distutils, a package that only existed in the version back in Debian Buster and then it was called python3-distutils. python3-distuils provides python3.11-distutils and python3.12-distutils in Trixe, and there never was an actual python3.10-distutils back in buster. So instead we break the earlier rule of not downloading packages from the net and grab python3.10-distutils-bogus_1.0_all.deb that I've uploaded to this repository. This is a meta package that says "python3.10-distuilts is installed, these are not the droid you're looking for". Unzip the .deb file and look at what it contains, or even better make it yourself with [equivs](https://packages.debian.org/search?keywords=equivs). If you trust me (which again, you shouldn't) download the .deb file and install it with apt.
 
 ```
 sudo apt install ./python3.10-distutils-bogus_1.0_all.deb
@@ -41,7 +41,7 @@ sudo apt install ./python3.10-distutils-bogus_1.0_all.deb
 
 **Install python3.10-minimal and python3.10-venv**
 
-After this we can install the python3.10 packages we need.
+After this we can install the python3.10 packages we need from the snapshot repository.
 
 ```
 sudo apt install python3.10-minimal python3.10-venv
@@ -51,10 +51,10 @@ sudo apt install python3.10-minimal python3.10-venv
 
 Remove or comment out the snapshot repository from your sources.list
 
-**/etc/apt/sources.list**
+**Remove the snapshot source and preference files**
 ```
-#deb [check-valid-until=no] https://snapshot.debian.org/archive/debian/20240326T090155Z/ sid main<br />
-#deb-src [check-valid-until=no] https://snapshot.debian.org/archive/debian/20240326T090155Z/ sid main
+sudo rm /etc/apt/sources.list.d/snapshot.list
+sudo rm /etc/apt/preferences.d/snapshot
 ```
 
 And then run an apt update again.
